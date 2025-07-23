@@ -64,9 +64,7 @@ const successMessage = ref('')
 // Cargar categorías
 const loadCategories = async () => {
   try {
-    const res = await axios.get('/api/categories', {
-      withCredentials: true
-    })
+    const res = await axios.get('/api/categories')
     categories.value = res.data.data
   } catch (err) {
     console.error('Error al cargar categorías:', err)
@@ -80,12 +78,10 @@ onMounted(() => {
 // Enviar formulario
 const submitForm = async () => {
   try {
+await axios.get('/sanctum/csrf-cookie');
     const res = await axios.post(
       '/api/categories',
       form.value,
-      {
-        withCredentials: true
-      }
     )
 
     successMessage.value = 'Categoría añadida correctamente.'
